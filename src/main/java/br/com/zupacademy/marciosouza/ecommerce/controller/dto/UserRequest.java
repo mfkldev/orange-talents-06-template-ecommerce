@@ -1,34 +1,28 @@
 package br.com.zupacademy.marciosouza.ecommerce.controller.dto;
 
+import br.com.zupacademy.marciosouza.ecommerce.config.exceptions.validation.Unique;
 import br.com.zupacademy.marciosouza.ecommerce.model.CleanPassword;
 import br.com.zupacademy.marciosouza.ecommerce.model.User;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class UserRequest {
 
-    @NotBlank @Email @Length(min = 6)
+    @NotBlank @Email @Length(min = 6) @Unique(clazz = User.class, fieldName = "email")
     private String email;
 
-    @NotNull
-    private CleanPassword cleanPassword;
+    @NotBlank @Length(min = 6)
+    private String password;
 
-    public UserRequest(@NotBlank @Email @Length(min = 6) String email, @NotNull CleanPassword cleanPassword) {
-        Assert.isTrue(StringUtils.hasLength(email), "Não pode ser em branco");
-        Assert.notNull(cleanPassword, "Não pode ser nulo");
+
+    public UserRequest(@NotBlank @Email @Length(min = 6) String email, @NotBlank @Length(min = 6) String password) {
 
         this.email = email;
-        this.cleanPassword = cleanPassword;
+        this.password = password;
     }
 
     public User converter() {
-        return new User(email, cleanPassword);
+        return new User(email, new CleanPassword(password));
     }
 }

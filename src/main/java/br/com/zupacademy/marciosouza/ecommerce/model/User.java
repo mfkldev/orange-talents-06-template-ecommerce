@@ -9,12 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-public class User {
+public class User{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +34,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, CleanPassword cleanPassword) {
-        Assert.isTrue(StringUtils.hasLength(email), "Não pode ser em branco");
-        Assert.notNull(cleanPassword, "Não pode ser nulo");
+    public User(@NotBlank @Email String email, @Valid @NotNull CleanPassword cleanPassword) {
 
         this.email = email;
         this.password = cleanPassword.passwordEncoder();

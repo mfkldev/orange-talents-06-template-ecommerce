@@ -16,6 +16,7 @@ public class CleanPassword {
     public CleanPassword(@NotBlank @Length(min = 6) String cleanPassword) {
         Assert.hasLength(cleanPassword, "Não pode ser em branco");
         Assert.isTrue(cleanPassword.length() >= 6, "Deve ter pelo menos 6 caracteres");
+
         this.cleanPassword = cleanPassword;
     }
 
