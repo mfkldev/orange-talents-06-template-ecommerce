@@ -2,9 +2,10 @@ package br.com.zupacademy.marciosouza.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
+@EnableSpringDataWebSupport
 public class
 EcommerceApplication {
 

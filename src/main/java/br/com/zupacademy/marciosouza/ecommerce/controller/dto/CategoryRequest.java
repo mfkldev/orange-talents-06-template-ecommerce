@@ -1,5 +1,6 @@
 package br.com.zupacademy.marciosouza.ecommerce.controller.dto;
 
+import br.com.zupacademy.marciosouza.ecommerce.config.exceptions.validation.ExistId;
 import br.com.zupacademy.marciosouza.ecommerce.config.exceptions.validation.Unique;
 import br.com.zupacademy.marciosouza.ecommerce.model.Category;
 import br.com.zupacademy.marciosouza.ecommerce.repository.CategoryRepository;
@@ -10,6 +11,7 @@ public class CategoryRequest {
     @NotBlank @Unique(clazz = Category.class, fieldName = "name")
     private String name;
 
+    @ExistId(clazz = Category.class, fieldName = "id")
     private Long idParent;
 
     public CategoryRequest(String name, Long idParent) {

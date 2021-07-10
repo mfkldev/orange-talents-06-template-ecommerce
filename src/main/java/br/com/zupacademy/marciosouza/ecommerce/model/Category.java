@@ -17,7 +17,7 @@ public class Category {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private Category parent;
-    
+
     @OneToMany(mappedBy = "parent")
     private List<Category> children;
 
