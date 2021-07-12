@@ -11,7 +11,6 @@ public class CategoryRequest {
     @NotBlank @Unique(clazz = Category.class, fieldName = "name")
     private String name;
 
-    @ExistId(clazz = Category.class, fieldName = "id")
     private Long idParent;
 
     public CategoryRequest(String name, Long idParent) {

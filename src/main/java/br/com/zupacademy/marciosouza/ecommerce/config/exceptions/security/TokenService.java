@@ -16,7 +16,7 @@ public class TokenService {
 	@Value("${ecommerce.jwt.expiration}")
 	private String expiration;
 	
-	@Value("${ecommerce.jwt.secret}")
+	@Value("${ecommerce.jwt.secret}") //Injeta propriedades do application.properties
 	private String secret;
 
 	public String generateToken(Authentication authentication) {
@@ -46,5 +46,4 @@ public class TokenService {
 		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
 		return Long.parseLong(claims.getSubject());
 	}
-
 }

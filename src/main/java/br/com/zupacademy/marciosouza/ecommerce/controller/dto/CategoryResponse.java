@@ -9,7 +9,9 @@ public class CategoryResponse {
 
     public CategoryResponse(Category category) {
         this.name = category.getName();
-        this.parent = category.getParent().getName();
+        if(category.getParent() != null) {
+            this.parent = category.getParent().getName();
+        }
     }
 
     public String getName() {

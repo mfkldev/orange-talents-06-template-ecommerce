@@ -36,10 +36,10 @@ public class ErroDeValidacaoHandler {
         return listErrosReponse;
     }
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+ /*   @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValueInstantiationException.class)
     public ErrosReponse handle2(ValueInstantiationException exception){
 
-        return new ErrosReponse("Não pode ser em branco", exception.getPath().toString()); //Ficou ruim demais. Preciso melhorar isso. Ele não tem Errors.
-    }
+        return new ErrosReponse("Não pode ser em branco!", exception.getPath().toString()); //Ficou ruim demais. Preciso melhorar isso. Ele não tem Errors.
+    }*/
 }
