@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class UserResponse {
 
     private String email;
+
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime creationMoment;
 

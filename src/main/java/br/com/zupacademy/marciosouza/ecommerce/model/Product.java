@@ -2,7 +2,6 @@ package br.com.zupacademy.marciosouza.ecommerce.model;
 
 import br.com.zupacademy.marciosouza.ecommerce.controller.dto.FeatureRequest;
 import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -46,6 +45,9 @@ public class Product {
 
     @NotNull @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private Set<Images> images = new HashSet<>();
 
     @Deprecated
     public Product() {
@@ -113,11 +115,25 @@ public class Product {
         return category;
     }
 
+    public Set<Images> getImages() {
+        return images;
+    }
+
     public Set<Feature> getFeatures() {
         return features;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public void connectImage(Set<String> links) {
+        Set<Images> connectedImage = links.stream().map(link -> new Images(this, link)).collect(Collectors.toSet());
+        this.images.addAll(connectedImage);
+    }
+
+    public boolean ownership(User user) {
+        System.out.println("USUARIO LOGADO: "+user.getEmail() + "| USUARIO DO PRODUTO: "+this.user.getEmail());
+        return this.user.equals(user);
     }
 }
