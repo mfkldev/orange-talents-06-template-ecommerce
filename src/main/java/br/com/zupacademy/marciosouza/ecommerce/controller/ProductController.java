@@ -1,11 +1,9 @@
 package br.com.zupacademy.marciosouza.ecommerce.controller;
 
 import br.com.zupacademy.marciosouza.ecommerce.controller.dto.*;
-import br.com.zupacademy.marciosouza.ecommerce.model.Opinion;
 import br.com.zupacademy.marciosouza.ecommerce.model.Product;
 import br.com.zupacademy.marciosouza.ecommerce.model.User;
 import br.com.zupacademy.marciosouza.ecommerce.repository.CategoryRepository;
-import br.com.zupacademy.marciosouza.ecommerce.repository.OpinionRepository;
 import br.com.zupacademy.marciosouza.ecommerce.repository.ProductRepository;
 import br.com.zupacademy.marciosouza.ecommerce.service.ServidorImage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +23,6 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private OpinionRepository opinionRepository;
 
     @Autowired
     private ServidorImage servidorImage;
@@ -60,21 +55,6 @@ public class ProductController {
         productRepository.save(product);
 
         return ResponseEntity.ok(new ProductResponse(product));
-    }
-
-    @PostMapping(value = "produto/{id}/opiniao")
-    @Transactional
-    public ResponseEntity<?> saveOpinion(@PathVariable Long id, @RequestBody @Valid OpinionRequest opinionRequest, @AuthenticationPrincipal User user){
-
-        Product product = productRepository.getById(id);
-
-        product.ownership(user);
-
-        Opinion opinion = opinionRequest.toModel(product, user);
-
-        opinionRepository.save(opinion);
-
-        return ResponseEntity.ok(new OpinionReponse(opinion));
     }
 
 }
