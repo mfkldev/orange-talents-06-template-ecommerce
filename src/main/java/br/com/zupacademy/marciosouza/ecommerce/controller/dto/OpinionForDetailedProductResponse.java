@@ -2,20 +2,16 @@ package br.com.zupacademy.marciosouza.ecommerce.controller.dto;
 
 import br.com.zupacademy.marciosouza.ecommerce.model.Opinion;
 
-public class OpinionReponse {
+public class OpinionForDetailedProductResponse {
 
     private String title;
     private String description;
     private int rating;
-    private String user;
-    private String product;
 
-    public OpinionReponse(Opinion opinion) {
+    public OpinionForDetailedProductResponse(Opinion opinion) {
         this.title = opinion.getTitle();
         this.description = opinion.getDescription();
         this.rating = opinion.getRating();
-        this.user = opinion.getUser().getUsername();
-        this.product = opinion.getProduct().getName();
     }
 
     public String getTitle() {
@@ -28,13 +24,5 @@ public class OpinionReponse {
 
     public int getRating() {
         return rating;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public String getProduct() {
-        return product;
     }
 }

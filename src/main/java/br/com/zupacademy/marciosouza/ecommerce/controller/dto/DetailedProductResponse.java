@@ -2,37 +2,42 @@ package br.com.zupacademy.marciosouza.ecommerce.controller.dto;
 
 import br.com.zupacademy.marciosouza.ecommerce.model.Images;
 import br.com.zupacademy.marciosouza.ecommerce.model.Product;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ProductResponse {
-
+public class DetailedProductResponse {
 
     private String name;
     private BigDecimal price;
     private int availableQuantity;
     private String description;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime registrationDate = LocalDateTime.now();
     private CategoryResponse category;
     private Set<FeatureResponse> features = new HashSet<>();
-    private UserResponse user;
+    private String seller;
     private Set<String> images;
+    private Double productAverage;
+    private int totalOpinions;
+    private List<OpinionForDetailedProductResponse> opinionResponses = new ArrayList<>();
+    private List<QuestionForDetailedProductResponse> questionForDetailedProductResponses = new ArrayList<>();
 
-    public ProductResponse(Product product) {
+
+    public DetailedProductResponse(Product product) {
         this.name = product.getName();
+        this.productAverage = product.productAverage();
+        this.totalOpinions = product.totalOpinions();
         this.price = product.getPrice();
         this.availableQuantity = product.getAvailableQuantity();
         this.description = product.getDescription();
-        this.registrationDate = product.getRegistrationDate();
         this.category = new CategoryResponse(product.getCategory());
         this.features = product.getFeatures().stream().map(FeatureResponse::new).collect(Collectors.toSet());
-        this.user = new UserResponse(product.getUser());
+        this.seller = new UserResponse(product.getUser()).fakeUserName();
         this.images = product.getImages().stream().map(Images::getLink).collect(Collectors.toSet());
+        this.opinionResponses = product.getOpinions();
+        this.questionForDetailedProductResponses = product.getQuestions();
     }
 
     public String getName() {
@@ -46,10 +51,9 @@ public class ProductResponse {
                 ", price=" + price +
                 ", availableQuantity=" + availableQuantity +
                 ", description='" + description + '\'' +
-                ", registrationDate=" + registrationDate +
                 ", category=" + category +
                 ", features=" + features +
-                ", user=" + user +
+                ", user=" + seller +
                 '}';
     }
 
@@ -57,16 +61,16 @@ public class ProductResponse {
         return price;
     }
 
+    public Double getProductAverage() { return productAverage; }
+
+    public int getTotalOpinions() { return totalOpinions; }
+
     public int getAvailableQuantity() {
         return availableQuantity;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public LocalDateTime getRegistrationDate() {
-        return registrationDate;
     }
 
     public CategoryResponse getCategory() {
@@ -77,11 +81,19 @@ public class ProductResponse {
         return features;
     }
 
-    public UserResponse getUser() {
-        return user;
+    public String getSeller() {
+        return seller;
     }
 
     public Set<String> getImages() {
         return images;
+    }
+
+    public List<OpinionForDetailedProductResponse> getOpinionResponses() {
+        return opinionResponses;
+    }
+
+    public List<QuestionForDetailedProductResponse> getQuestionForDetailedProductResponses() {
+        return questionForDetailedProductResponses;
     }
 }

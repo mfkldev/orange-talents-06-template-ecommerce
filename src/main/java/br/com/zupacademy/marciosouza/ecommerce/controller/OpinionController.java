@@ -1,6 +1,6 @@
 package br.com.zupacademy.marciosouza.ecommerce.controller;
 
-import br.com.zupacademy.marciosouza.ecommerce.controller.dto.OpinionReponse;
+import br.com.zupacademy.marciosouza.ecommerce.controller.dto.OpinionResponse;
 import br.com.zupacademy.marciosouza.ecommerce.controller.dto.OpinionRequest;
 import br.com.zupacademy.marciosouza.ecommerce.model.Opinion;
 import br.com.zupacademy.marciosouza.ecommerce.model.Product;
@@ -37,6 +37,6 @@ public class OpinionController {
 
         opinionRepository.save(opinion);
 
-        return ResponseEntity.ok(new OpinionReponse(opinion));
+        return ResponseEntity.ok(new OpinionResponse(opinion));
     }
 }

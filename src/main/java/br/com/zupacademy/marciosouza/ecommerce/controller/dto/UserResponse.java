@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public class UserResponse {
 
+
     private String email;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
@@ -23,4 +24,9 @@ public class UserResponse {
     public LocalDateTime getCreationMoment() {
         return creationMoment;
     }
+
+    public String fakeUserName(){ //POG? Se for, me avisem
+        return this.email.split("@")[0];
+    }
+
 }

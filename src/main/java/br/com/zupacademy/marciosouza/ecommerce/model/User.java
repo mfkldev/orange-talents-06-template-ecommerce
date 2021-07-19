@@ -36,6 +36,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Opinion> opinions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions = new ArrayList<>();
+
     @Deprecated
     public User() {
     }

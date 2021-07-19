@@ -1,10 +1,11 @@
 package br.com.zupacademy.marciosouza.ecommerce.model;
 
 import br.com.zupacademy.marciosouza.ecommerce.controller.dto.FeatureRequest;
+import br.com.zupacademy.marciosouza.ecommerce.controller.dto.OpinionForDetailedProductResponse;
+import br.com.zupacademy.marciosouza.ecommerce.controller.dto.QuestionForDetailedProductResponse;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Entity
 public class Product {
@@ -51,6 +53,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Opinion> opinions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Question> questions = new ArrayList<>();
 
     @Deprecated
     public Product() {
@@ -139,5 +144,26 @@ public class Product {
         if(!this.user.equals(user)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+    }
+
+    public Double productAverage() {
+
+        DoubleStream ratingStream  = opinions.stream().map(Opinion::getRating).mapToDouble(Integer::doubleValue);
+
+        OptionalDouble ratingAverage = ratingStream.average();
+
+        return ratingAverage.orElse(0.0);
+    }
+
+    public int totalOpinions() {
+        return opinions.size();
+    }
+
+    public List<OpinionForDetailedProductResponse> getOpinions() {
+        return opinions.stream().map(OpinionForDetailedProductResponse::new).collect(Collectors.toList());
+    }
+
+    public List<QuestionForDetailedProductResponse> getQuestions() {
+        return questions.stream().map(QuestionForDetailedProductResponse::new).collect(Collectors.toList());
     }
 }
