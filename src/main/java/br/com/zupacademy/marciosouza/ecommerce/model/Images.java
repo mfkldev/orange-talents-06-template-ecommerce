@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class Images {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne @NotNull @Valid
     private Product product;

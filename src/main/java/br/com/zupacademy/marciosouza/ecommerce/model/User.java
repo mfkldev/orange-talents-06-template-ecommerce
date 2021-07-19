@@ -33,6 +33,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Opinion> opinions = new ArrayList<>();
 
     @Deprecated
     public User() {

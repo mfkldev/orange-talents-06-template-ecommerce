@@ -2,6 +2,9 @@ package br.com.zupacademy.marciosouza.ecommerce.model;
 
 import br.com.zupacademy.marciosouza.ecommerce.controller.dto.FeatureRequest;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -10,10 +13,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -48,6 +48,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private Set<Images> images = new HashSet<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Opinion> opinions = new ArrayList<>();
 
     @Deprecated
     public Product() {
@@ -132,8 +135,9 @@ public class Product {
         this.images.addAll(connectedImage);
     }
 
-    public boolean ownership(User user) {
-        System.out.println("USUARIO LOGADO: "+user.getEmail() + "| USUARIO DO PRODUTO: "+this.user.getEmail());
-        return this.user.equals(user);
+    public void ownership(User user) throws ResponseStatusException {
+        if(!this.user.equals(user)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 }
